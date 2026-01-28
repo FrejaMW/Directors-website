@@ -1,111 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Freja Majlund Westh</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- INTRO -->
-  <div id="intro">
-    <h1>Freja Majlund Westh</h1>
-  </div>
+<div id="intro">
+  <h1>Freja Majlund Westh</h1>
+</div>
 
-  <main id="work">
+<main id="work">
 
-    <!-- HERO -->
-    <section class="hero">
+  <!-- HERO -->
+  <section class="hero">
 
-      <!-- HERO 2 – BEFORE (FULL WIDTH) -->
-      <div class="hero-row full">
-        <div class="project upcoming">
-          <img src="project2.jpg" alt="Before">
-          <div class="overlay">
-            <span class="progress-label">IN&nbsp;PROGRESS</span>
-            <span class="title">Before</span>
-          </div>
-        </div>
-      </div>
+    <!-- TOP ROW -->
+    <div class="hero-row">
 
-      <!-- HERO 1 + HERO 3 -->
-      <div class="hero-row">
-        <div class="project video" data-video>
-          <iframe
-            src="https://player.vimeo.com/video/907428484?background=0&controls=0&title=0&byline=0&portrait=0"
-            allow="autoplay; fullscreen"
-            allowfullscreen>
-          </iframe>
-
-          <div class="click-layer"></div>
-
-          <div class="overlay">
-            <span class="watch">WATCH</span>
-
-            <div class="controls">
-              <button class="skip back">« 5s</button>
-              <button class="playpause">PAUSE</button>
-              <button class="skip forward">5s »</button>
-              <div class="timeline"><div class="progress"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="project video" data-video>
-          <iframe
-            src="https://player.vimeo.com/video/795878328?background=0&controls=0&title=0&byline=0&portrait=0"
-            allow="autoplay; fullscreen"
-            allowfullscreen>
-          </iframe>
-
-          <div class="click-layer"></div>
-
-          <div class="overlay">
-            <span class="watch">WATCH</span>
-
-            <div class="controls">
-              <button class="skip back">« 5s</button>
-              <button class="playpause">PAUSE</button>
-              <button class="skip forward">5s »</button>
-              <div class="timeline"><div class="progress"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- GRID -->
-    <section class="grid">
+      <!-- PROJECT 1 -->
       <div class="project video" data-video>
         <iframe
-          src="https://player.vimeo.com/video/881654106?background=0&controls=0&title=0&byline=0&portrait=0"
+          src="https://player.vimeo.com/video/907428484?controls=0&title=0&byline=0&portrait=0"
           allow="autoplay; fullscreen"
-          allowfullscreen>
-        </iframe>
-
-        <div class="click-layer"></div>
+        ></iframe>
 
         <div class="overlay">
           <span class="watch">WATCH</span>
+
           <div class="controls">
-            <button class="skip back">« 5s</button>
             <button class="playpause">PAUSE</button>
-            <button class="skip forward">5s »</button>
-            <div class="timeline"><div class="progress"></div></div>
+            <div class="timeline">
+              <div class="progress"></div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <footer>
-      <a href="mailto:fmajlundw@icloud.com">Contact</a>
-    </footer>
+      <!-- PROJECT 2 – BEFORE -->
+      <div class="project upcoming">
+        <img src="project2.jpg" alt="Before">
+        <div class="overlay">
+          <span class="progress-label">IN&nbsp;PROGRESS</span>
+          <span class="title">Before</span>
+        </div>
+      </div>
 
-  </main>
+    </div>
 
-  <script src="https://player.vimeo.com/api/player.js"></script>
-  <script src="script.js"></script>
+    <!-- SECOND ROW -->
+    <div class="hero-row center">
+      <div class="project video" data-video>
+        <iframe
+          src="https://player.vimeo.com/video/795878328?controls=0&title=0&byline=0&portrait=0"
+          allow="autoplay; fullscreen"
+        ></iframe>
+
+        <div class="overlay">
+          <span class="watch">WATCH</span>
+
+          <div class="controls">
+            <button class="playpause">PAUSE</button>
+            <div class="timeline">
+              <div class="progress"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- DISCREET GRID -->
+  <section class="grid">
+    <div class="project video" data-video>
+      <iframe
+        src="https://player.vimeo.com/video/881654106?controls=0&title=0&byline=0&portrait=0"
+        allow="autoplay; fullscreen"
+      ></iframe>
+
+      <div class="overlay">
+        <span class="watch">WATCH</span>
+
+        <div class="controls">
+          <button class="playpause">PAUSE</button>
+          <div class="timeline">
+            <div class="progress"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="mailto:fmajlundw@icloud.com">CONTACT</a>
+  </footer>
+
+</main>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

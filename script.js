@@ -10,25 +10,21 @@ window.onload = () => {
     }, 1500);
   }, 2000);
 
-  // ---- Video logic ----
-  if (typeof Vimeo === "undefined") return;
+  if (!window.Vimeo) return;
 
   document.querySelectorAll("[data-video]").forEach(project => {
     const iframe = project.querySelector("iframe");
-    if (!iframe) return;
-
     const player = new Vimeo.Player(iframe);
-    const watch = project.querySelector(".watch");
+
     const playBtn = project.querySelector(".playpause");
     const timeline = project.querySelector(".timeline");
     const progress = project.querySelector(".progress");
-    const back = project.querySelector(".skip.back");
-    const forward = project.querySelector(".skip.forward");
+    const watch = project.querySelector(".watch");
 
     let playing = false;
-    let timer = null;
+    let interval = null;
 
-    // Hover preview
+    // Hover preview (desktop)
     if (window.matchMedia("(hover: hover)").matches) {
       project.addEventListener("mouseenter", () => {
         player.setVolume(0);
@@ -40,29 +36,23 @@ window.onload = () => {
       });
     }
 
-    // Click to fullscreen
-    project.querySelector(".click-layer").addEventListener("click", () => {
+    // Click → fullscreen
+    project.addEventListener("click", () => {
       if (watch) watch.style.display = "none";
-
       playing = true;
+
       player.setVolume(1);
-      player.play().catch(() => {});
+      player.play();
 
-      if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-      }
-
-      timer = setInterval(updateProgress, 200);
+      iframe.requestFullscreen();
+      interval = setInterval(updateProgress, 200);
     });
 
     function updateProgress() {
       Promise.all([player.getCurrentTime(), player.getDuration()])
         .then(([t, d]) => {
-          if (d > 0) {
-            progress.style.width = (t / d * 100) + "%";
-          }
-        })
-        .catch(() => {});
+          progress.style.width = (t / d) * 100 + "%";
+        });
     }
 
     playBtn.onclick = e => {
@@ -77,31 +67,19 @@ window.onload = () => {
       playing = !playing;
     };
 
-    back.onclick = e => {
-      e.stopPropagation();
-      player.getCurrentTime()
-        .then(t => player.setCurrentTime(Math.max(0, t - 5)));
-    };
-
-    forward.onclick = e => {
-      e.stopPropagation();
-      Promise.all([player.getCurrentTime(), player.getDuration()])
-        .then(([t, d]) => player.setCurrentTime(Math.min(d, t + 5)));
-    };
-
     timeline.onclick = e => {
+      e.stopPropagation();
       const rect = timeline.getBoundingClientRect();
       const percent = (e.clientX - rect.left) / rect.width;
-      player.getDuration()
-        .then(d => player.setCurrentTime(d * percent));
+      player.getDuration().then(d => player.setCurrentTime(d * percent));
     };
 
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
         playing = false;
         if (watch) watch.style.display = "";
-        player.pause().catch(() => {});
-        clearInterval(timer);
+        player.pause();
+        clearInterval(interval);
       }
     });
   });
