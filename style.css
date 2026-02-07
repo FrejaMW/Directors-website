@@ -2,6 +2,7 @@
   --intro-pink: #f2a1b3;
 }
 
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -49,10 +50,6 @@ body {
   height: 100vh;
 }
 
-.hero-row.center {
-  justify-content: center;
-}
-
 .project {
   position: relative;
   width: 50%;
@@ -60,42 +57,27 @@ body {
   overflow: hidden;
 }
 
-/* 🔥 REQUIRED FIX */
+/* IMAGE + VIDEO STYLE */
+.project img,
 .project iframe {
-  pointer-events: none;
-}
-
-.project.is-fullscreen iframe {
-  pointer-events: auto;
-}
-
-.project iframe,
-.project img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border: none;
 }
 
-/* UPCOMING */
-.upcoming img {
-  filter: grayscale(100%);
+/* Discreet style for bottom row */
+.hero-row.discreet {
+  opacity: 0.7;
+  filter: grayscale(50%);
 }
 
-.progress-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  letter-spacing: 0.3em;
+/* Prevent accidental clicks on video */
+.project iframe {
+  pointer-events: none;
 }
-
-.title {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+.project.is-fullscreen iframe {
+  pointer-events: auto;
 }
 
 /* OVERLAY */
@@ -105,7 +87,7 @@ body {
   pointer-events: none;
 }
 
-/* WATCH */
+/* WATCH LABEL */
 .watch {
   position: absolute;
   top: 50%;
@@ -133,52 +115,6 @@ body {
   cursor: pointer;
 }
 
-/* CONTROLS */
-.controls {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  display: none;
-  gap: 20px;
-  align-items: center;
-  pointer-events: auto;
-}
-
-/* SHOW CONTROLS IN FULLSCREEN */
-.project.is-fullscreen .controls {
-  display: flex;
-}
-
-.playpause {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 10px 20px;
-  letter-spacing: 0.2em;
-  cursor: pointer;
-}
-
-.timeline {
-  width: 200px;
-  height: 4px;
-  background: rgba(255,255,255,0.3);
-  cursor: pointer;
-}
-
-.progress {
-  height: 100%;
-  width: 0%;
-  background: white;
-}
-
-/* GRID */
-.grid {
-  padding: 80px 60px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
-}
-
 /* FOOTER */
 footer {
   padding: 80px 0;
@@ -192,7 +128,7 @@ footer a {
   opacity: 0.6;
 }
 
-/* MOBILE */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .hero-row {
     flex-direction: column;
@@ -202,10 +138,5 @@ footer a {
   .project {
     width: 100%;
     height: 50vh;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    padding: 40px 20px;
   }
 }

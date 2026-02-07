@@ -1,5 +1,4 @@
 window.onload = () => {
-
   const intro = document.getElementById("intro");
   const work = document.getElementById("work");
 
@@ -12,20 +11,23 @@ window.onload = () => {
   }, 2000);
 
   document.querySelectorAll("[data-video]").forEach(project => {
+
+    // Only run if this project actually has a Vimeo iframe
     const iframe = project.querySelector("iframe");
+    if (!iframe) return;
+
     const clickLayer = project.querySelector(".click-layer");
     const watch = project.querySelector(".watch");
-    const playBtn = project.querySelector(".playpause");
-    const timeline = project.querySelector(".timeline");
-    const progress = project.querySelector(".progress");
 
     const player = new Vimeo.Player(iframe);
 
     let playing = false;
     let interval = null;
 
-    /* Hover preview */
-    if (window.matchMedia("(hover: hover)").matches) {
+    const isDiscreet = project.closest(".discreet") !== null;
+
+    /* Hover preview (only on non-discreet videos) */
+    if (!isDiscreet && window.matchMedia("(hover: hover)").matches) {
       project.addEventListener("mouseenter", () => {
         player.setVolume(0);
         player.play().catch(() => {});
@@ -56,32 +58,42 @@ window.onload = () => {
     });
 
     function updateProgress() {
-      Promise.all([player.getCurrentTime(), player.getDuration()])
-        .then(([t, d]) => {
-          progress.style.width = (t / d) * 100 + "%";
+      player.getCurrentTime().then(t => {
+        return player.getDuration().then(d => {
+          const percent = (t / d) * 100;
+          const progress = project.querySelector(".progress");
+          if (progress) progress.style.width = percent + "%";
         });
+      });
     }
 
-    playBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      if (playing) {
-        player.pause();
-        playBtn.textContent = "PLAY";
-        project.classList.remove("is-playing");
-      } else {
-        player.play();
-        playBtn.textContent = "PAUSE";
-        project.classList.add("is-playing");
-      }
-      playing = !playing;
-    });
+    // Optional controls if added later
+    const playBtn = project.querySelector(".playpause");
+    if (playBtn) {
+      playBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        if (playing) {
+          player.pause();
+          playBtn.textContent = "PLAY";
+          project.classList.remove("is-playing");
+        } else {
+          player.play();
+          playBtn.textContent = "PAUSE";
+          project.classList.add("is-playing");
+        }
+        playing = !playing;
+      });
+    }
 
-    timeline.addEventListener("click", e => {
-      e.stopPropagation();
-      const rect = timeline.getBoundingClientRect();
-      const percent = (e.clientX - rect.left) / rect.width;
-      player.getDuration().then(d => player.setCurrentTime(d * percent));
-    });
+    const timeline = project.querySelector(".timeline");
+    if (timeline) {
+      timeline.addEventListener("click", e => {
+        e.stopPropagation();
+        const rect = timeline.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        player.getDuration().then(d => player.setCurrentTime(d * percent));
+      });
+    }
 
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
