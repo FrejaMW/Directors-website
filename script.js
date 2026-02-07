@@ -47,7 +47,6 @@ window.onload = () => {
       await player.setVolume(1);
       await player.play();
 
-      // Vimeo fullscreen via native browser
       (project.requestFullscreen ||
        project.webkitRequestFullscreen ||
        project.msRequestFullscreen).call(project);
