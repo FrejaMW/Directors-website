@@ -66,10 +66,28 @@ body {
   border: none;
 }
 
-/* Discreet style for bottom row */
-.hero-row.discreet {
-  opacity: 0.7;
-  filter: grayscale(50%);
+/* BLACK & WHITE FOR TOP IMAGES */
+.project.image img {
+  filter: grayscale(100%);
+}
+
+/* IN PROGRESS LABEL ON IMAGES */
+.progress-label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  letter-spacing: 0.3em;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.title {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  opacity: 0.9;
 }
 
 /* Prevent accidental clicks on video */
@@ -98,7 +116,7 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.project:hover .watch {
+.project.video:hover .watch {
   opacity: 0.85;
 }
 

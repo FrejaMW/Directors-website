@@ -12,27 +12,22 @@ window.onload = () => {
 
   document.querySelectorAll("[data-video]").forEach(project => {
 
-    // Only run if this project actually has a Vimeo iframe
     const iframe = project.querySelector("iframe");
     if (!iframe) return;
 
     const clickLayer = project.querySelector(".click-layer");
     const watch = project.querySelector(".watch");
-
     const player = new Vimeo.Player(iframe);
 
     let playing = false;
-    let interval = null;
 
-    const isDiscreet = project.closest(".discreet") !== null;
-
-    /* Hover preview (only on non-discreet videos) */
-    if (!isDiscreet && window.matchMedia("(hover: hover)").matches) {
+    // Hover preview only for main hero videos (not commercials)
+    const isCommercial = project.classList.contains("commercial");
+    if (!isCommercial && window.matchMedia("(hover: hover)").matches) {
       project.addEventListener("mouseenter", () => {
         player.setVolume(0);
         player.play().catch(() => {});
       });
-
       project.addEventListener("mouseleave", () => {
         if (!project.classList.contains("is-fullscreen")) {
           player.pause().catch(() => {});
@@ -40,7 +35,7 @@ window.onload = () => {
       });
     }
 
-    /* CLICK → PLAY + FULLSCREEN */
+    // Click → play + fullscreen
     clickLayer.addEventListener("click", async () => {
       watch.style.display = "none";
       project.classList.add("is-fullscreen");
@@ -54,46 +49,7 @@ window.onload = () => {
        project.msRequestFullscreen).call(project);
 
       playing = true;
-      interval = setInterval(updateProgress, 200);
     });
-
-    function updateProgress() {
-      player.getCurrentTime().then(t => {
-        return player.getDuration().then(d => {
-          const percent = (t / d) * 100;
-          const progress = project.querySelector(".progress");
-          if (progress) progress.style.width = percent + "%";
-        });
-      });
-    }
-
-    // Optional controls if added later
-    const playBtn = project.querySelector(".playpause");
-    if (playBtn) {
-      playBtn.addEventListener("click", e => {
-        e.stopPropagation();
-        if (playing) {
-          player.pause();
-          playBtn.textContent = "PLAY";
-          project.classList.remove("is-playing");
-        } else {
-          player.play();
-          playBtn.textContent = "PAUSE";
-          project.classList.add("is-playing");
-        }
-        playing = !playing;
-      });
-    }
-
-    const timeline = project.querySelector(".timeline");
-    if (timeline) {
-      timeline.addEventListener("click", e => {
-        e.stopPropagation();
-        const rect = timeline.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        player.getDuration().then(d => player.setCurrentTime(d * percent));
-      });
-    }
 
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
@@ -101,7 +57,6 @@ window.onload = () => {
         project.classList.remove("is-playing");
         watch.style.display = "";
         player.pause();
-        clearInterval(interval);
         playing = false;
       }
     });
